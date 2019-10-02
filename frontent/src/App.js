@@ -1,22 +1,43 @@
-import React from 'react';
+import React, { useState } from 'react';
+import api from './services/api';
 import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
+import logo from './assets/logo.svg';
+
+function App() {  
+
+  const [email, setEmail] = useState('');
+
+  async function handleSubmit(event) {
+    event.preventDefault();
+    
+    const response = await api.post('/sessions', { email });
+
+    console.log(response);
+  }
+
+  return (    
+    <div className="container">
+      <img src={logo} alt="AirCnC"/>
+
+      <div className="content">
         <p>
-          Edit <code>src/App.js</code> and save to reload.
+          Ofereça <strong>spots</strong> para programadores e encontre <strong>talentos</strong> para sua empresa
         </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+        <form onSubmit={handleSubmit}>
+          <label htmlFor="email">E-mail *</label>
+
+          <input 
+            type="email" 
+            id="email" 
+            placeholder="Seu melhor E-mail"
+            value={email}
+            onChange={event => setEmail(event.target.value)}
+          />
+
+          <button className="btn" type="submit">Entrar</button>  
+        </form>
+      </div>
     </div>
   );
 }
