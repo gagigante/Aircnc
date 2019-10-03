@@ -15,8 +15,7 @@ function SpotList({ tech, navigation }) {
                 params: { tech }
             })
 
-            setSpots(response.data);
-            console.log(response.data);
+            setSpots(response.data);            
         }
 
         loadSpots();

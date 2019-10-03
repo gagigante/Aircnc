@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { SafeAreaView, Text, Image, AsyncStorage, StyleSheet, ScrollView } from 'react-native';
+import { SafeAreaView, Text, Image, AsyncStorage, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 
 import SpotList from '../components/SpotList';
 
 import logo from '../assets/logo.png';
 
-export default function List() {
+export default function List({ navigation }) {
 
   const [techs, setTechs] = useState([]);
 
@@ -16,9 +16,16 @@ export default function List() {
     })
   }, []);
 
+  function handleLogOut() {
+    AsyncStorage.clear();
+    navigation.navigate('Login');
+  }
+
   return (
     <SafeAreaView style={styles.container}>
-      <Image style={styles.logo} source={logo} />    
+      <TouchableOpacity onPress={handleLogOut}>
+        <Image style={styles.logo} source={logo} />    
+      </TouchableOpacity>
 
       <ScrollView>
         {techs.map(tech => <SpotList key={tech} tech={tech} /> )}
